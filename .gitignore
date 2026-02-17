@@ -1,0 +1,9 @@
+node_modules
+.output
+dist
+*.local
+.env
+.env.*
+!.env.example
+src/routeTree.gen.ts
+.DS_Store

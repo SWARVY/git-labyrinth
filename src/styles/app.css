@@ -1,0 +1,412 @@
+/* 1. Silkscreen (UI/Numbers - Pixel Font) */
+@import url("https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap");
+
+/* 1b. Press Start 2P (Bold Pixel Title Font) */
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+@import "tailwindcss";
+
+/* 2. Galmuri9 (Body Text) */
+@font-face {
+  font-family: "Galmuri9";
+  src: url("https://cdn.jsdelivr.net/npm/galmuri@latest/dist/Galmuri9.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 3. Galmuri11 (Bold/Large Text) */
+@font-face {
+  font-family: "Galmuri11";
+  src: url("https://cdn.jsdelivr.net/npm/galmuri@latest/dist/Galmuri11.woff2")
+    format("woff2");
+  font-weight: bold;
+  font-style: normal;
+}
+
+:root {
+  --background: oklch(0.13 0.02 260);
+  --foreground: oklch(0.93 0.01 90);
+  --card: oklch(0.17 0.02 260);
+  --card-foreground: oklch(0.93 0.01 90);
+  --popover: oklch(0.17 0.02 260);
+  --popover-foreground: oklch(0.93 0.01 90);
+  --primary: oklch(0.82 0.17 80);
+  --primary-foreground: oklch(0.17 0.02 260);
+  --secondary: oklch(0.25 0.02 260);
+  --secondary-foreground: oklch(0.85 0.01 90);
+  --muted: oklch(0.25 0.02 260);
+  --muted-foreground: oklch(0.6 0.01 260);
+  --accent: oklch(0.3 0.03 260);
+  --accent-foreground: oklch(0.93 0.01 90);
+  --destructive: oklch(0.5 0.2 25);
+  --destructive-foreground: oklch(0.93 0.01 90);
+  --border: oklch(0.2 0.01 260);
+  --input: oklch(0.25 0.02 260);
+  --ring: oklch(0.82 0.17 80);
+  --radius: 0rem;
+  /* Chart colors (RPG attributes) */
+  --chart-1: oklch(0.7 0.18 50); /* VIT — warm red */
+  --chart-2: oklch(0.75 0.15 80); /* CHA — amber gold */
+  --chart-3: oklch(0.65 0.12 260); /* WIS — cool blue */
+  --chart-4: oklch(0.65 0.2 25); /* STR — crimson */
+  --chart-5: oklch(0.7 0.18 145); /* AGI — emerald */
+}
+
+@theme inline {
+  --font-title: "Press Start 2P", "Silkscreen", monospace;
+  --font-pixel: "Silkscreen", "Galmuri11", monospace;
+  --font-mono: "Galmuri9", "Galmuri11", monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-sm: 0rem;
+  --radius-md: 0rem;
+  --radius-lg: 0rem;
+  --radius-xl: 0rem;
+
+  --animate-breath: breath 3s infinite ease-in-out;
+  --animate-float: float 3s infinite ease-in-out;
+  --animate-flicker: flicker 0.15s infinite alternate;
+  --animate-glow-pulse: glow-pulse 2s infinite ease-in-out;
+  --animate-game-start-pulse: game-start-pulse 2s infinite ease-in-out;
+
+  @keyframes game-start-pulse {
+    0%,
+    100% {
+      opacity: 1;
+      text-shadow:
+        0 0 8px rgba(245, 158, 11, 0.4),
+        0 0 16px rgba(245, 158, 11, 0.2);
+    }
+    50% {
+      opacity: 0.6;
+      text-shadow:
+        0 0 4px rgba(245, 158, 11, 0.2),
+        0 0 8px rgba(245, 158, 11, 0.1);
+    }
+  }
+
+  @keyframes breath {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+  @keyframes flicker {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.8;
+    }
+  }
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+  @keyframes fireGlowOuter {
+    0%,
+    100% {
+      opacity: 0.12;
+    }
+    50% {
+      opacity: 0.25;
+    }
+  }
+  @keyframes fireGlowInner {
+    0%,
+    100% {
+      opacity: 0.2;
+    }
+    50% {
+      opacity: 0.45;
+    }
+  }
+  @keyframes spark {
+    0% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+    30% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground break-keep;
+    font-family: "Galmuri9", "Galmuri11", monospace;
+  }
+}
+
+/* ===== CRT Shader Overlay ===== */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background:
+    /* Scanlines */
+    repeating-linear-gradient(
+      transparent 0px,
+      transparent 2px,
+      rgba(0, 0, 0, 0.04) 2px,
+      rgba(0, 0, 0, 0.04) 4px
+    ),
+    /* Vignette */
+    radial-gradient(
+        ellipse at center,
+        transparent 50%,
+        rgba(0, 0, 0, 0.35) 100%
+      );
+}
+
+/* ===== Dungeon Visual Components ===== */
+
+/* Wall torch */
+.wall-torch {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.wall-torch-handle {
+  width: 6px;
+  height: 28px;
+  background: #78350f;
+  border: 1px solid #451a03;
+}
+.wall-torch-flame {
+  width: 14px;
+  height: 20px;
+  background: linear-gradient(to top, #ef4444, #f59e0b, #fbbf24);
+  clip-path: polygon(50% 0%, 10% 60%, 0% 100%, 100% 100%, 90% 60%);
+  animation: torch-flicker 0.25s infinite alternate;
+  margin-bottom: 2px;
+}
+.wall-torch-glow {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(
+    circle,
+    rgba(245, 158, 11, 0.2) 0%,
+    transparent 70%
+  );
+  animation: glow-pulse 2s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes torch-flicker {
+  0% {
+    transform: scaleX(1) scaleY(1);
+  }
+  50% {
+    transform: scaleX(0.85) scaleY(1.08);
+  }
+  100% {
+    transform: scaleX(1.1) scaleY(0.92);
+  }
+}
+
+/* Dungeon gate */
+.dungeon-gate {
+  position: relative;
+  border: 6px solid #1e293b;
+  background: repeating-linear-gradient(
+    0deg,
+    #334155 0px,
+    #334155 8px,
+    #293548 8px,
+    #293548 10px
+  );
+}
+.dungeon-gate::before,
+.dungeon-gate::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  width: 24px;
+  height: calc(100% + 12px);
+  background: repeating-linear-gradient(
+    0deg,
+    #475569 0px,
+    #475569 12px,
+    #334155 12px,
+    #334155 16px
+  );
+  border: 3px solid #1e293b;
+}
+.dungeon-gate::before {
+  left: -24px;
+}
+.dungeon-gate::after {
+  right: -24px;
+}
+
+/* Nav header — stone texture with decorative bottom border */
+.nav-header {
+  position: relative;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 40px,
+      rgba(255, 255, 255, 0.02) 40px,
+      rgba(255, 255, 255, 0.02) 42px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 20px,
+      rgba(255, 255, 255, 0.015) 20px,
+      rgba(255, 255, 255, 0.015) 22px
+    ),
+    linear-gradient(to bottom, oklch(0.2 0.02 260), oklch(0.15 0.02 260));
+}
+.nav-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    #78350f 0px,
+    #78350f 8px,
+    #451a03 8px,
+    #451a03 10px,
+    #92400e 10px,
+    #92400e 18px,
+    #451a03 18px,
+    #451a03 20px
+  );
+  opacity: 0.6;
+}
+
+/* Section title — RPG panel header with diamond markers and dashed lines */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+.section-title::before,
+.section-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    oklch(0.82 0.17 80 / 0.3) 0px,
+    oklch(0.82 0.17 80 / 0.3) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+/* Ground brick line */
+.ground-brick {
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    oklch(0.3 0.02 260) 0px,
+    oklch(0.3 0.02 260) 12px,
+    oklch(0.2 0.01 260) 12px,
+    oklch(0.2 0.01 260) 14px
+  );
+  opacity: 0.5;
+}
+
+/* Dashboard background — subtle dungeon tile pattern */
+.dungeon-bg {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 60px,
+      rgba(255, 255, 255, 0.01) 60px,
+      rgba(255, 255, 255, 0.01) 62px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 30px,
+      rgba(255, 255, 255, 0.008) 30px,
+      rgba(255, 255, 255, 0.008) 32px
+    );
+}
+
+/* Stone floor tiles */
+.stone-floor {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 30px,
+      rgba(0, 0, 0, 0.15) 30px,
+      rgba(0, 0, 0, 0.15) 32px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 14px,
+      rgba(0, 0, 0, 0.1) 14px,
+      rgba(0, 0, 0, 0.1) 16px
+    ),
+    linear-gradient(to bottom, #1e293b, #0f172a);
+}
