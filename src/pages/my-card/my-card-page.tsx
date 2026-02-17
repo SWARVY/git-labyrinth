@@ -82,7 +82,7 @@ function ReadmeCard({ userId }: { userId: string }) {
       </div>
 
       {/* Preview — both types shown, selected one highlighted */}
-      <div className="mb-4 grid grid-cols-2 gap-3">
+      <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
         {OG_TYPES.map((t) => {
           const url = t.value === "a" ? ogUrlA : ogUrlB;
           const isActive = selectedType === t.value;
@@ -108,14 +108,14 @@ function ReadmeCard({ userId }: { userId: string }) {
         <p className="mb-1 font-pixel text-[9px] text-muted-foreground">
           MARKDOWN FOR README
         </p>
-        <div className="flex items-stretch gap-2">
-          <code className="flex-1 select-text overflow-x-auto border-2 border-black bg-secondary px-3 py-2 font-mono text-[10px] text-foreground">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-stretch">
+          <code className="flex-1 select-text overflow-x-auto break-all border-2 border-black bg-secondary px-3 py-2 font-mono text-[10px] text-foreground">
             {markdown}
           </code>
           <button
             type="button"
             onClick={handleCopy}
-            className="border-2 border-black bg-secondary px-3 py-2 font-pixel text-[10px] text-primary transition-colors hover:bg-primary/10"
+            className="shrink-0 border-2 border-black bg-secondary px-3 py-2 font-pixel text-[10px] text-primary transition-colors hover:bg-primary/10"
           >
             <span aria-live="polite">{copied ? "COPIED!" : "COPY"}</span>
           </button>
@@ -144,7 +144,7 @@ export function MyCardPage() {
   return (
     <main className="dungeon-bg relative mx-auto max-w-5xl select-none px-4 py-6">
       <h1
-        className="section-title mb-6 font-pixel text-xl text-primary"
+        className="section-title mb-6 font-pixel text-lg text-primary sm:text-xl"
         style={{ textShadow: "0 0 6px rgba(245, 158, 11, 0.3)" }}
       >
         <span className="text-primary/40">◆</span>
