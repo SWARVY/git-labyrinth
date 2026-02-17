@@ -118,3 +118,13 @@ export function getJobSprites(language: string): JobSprites {
   const job = getJobClass(language);
   return SPRITE_REGISTRY[job.assetKey] ?? DEFAULT_SPRITES;
 }
+
+const DISPLAY_NAME_MAP: Record<string, string> = {
+  csharp: 'c#',
+};
+
+/** Returns a human-readable display name for a language key. */
+export function getLanguageDisplayName(language: string): string {
+  const key = normalizeLanguage(language);
+  return DISPLAY_NAME_MAP[key] ?? language;
+}

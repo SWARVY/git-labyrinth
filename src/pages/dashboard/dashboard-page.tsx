@@ -7,7 +7,7 @@ import {
   type UserCharacter,
 } from "@entities/character";
 import { useTranslation } from "react-i18next";
-import { getJobClass, getJobKey, getJobSprites } from "@shared/constants/jobs";
+import { getJobClass, getJobKey, getJobSprites, getLanguageDisplayName } from "@shared/constants/jobs";
 import { CampfireCanvas } from "@shared/ui";
 import { StatsBoard } from "@widgets/stats-dashboard";
 import { CharacterCollection } from "@widgets/character-collection";
@@ -120,7 +120,7 @@ function CampfireScene({
                 <div className="flex items-center gap-1 whitespace-nowrap border border-primary/30 bg-card px-2 py-0.5 font-pixel text-[8px] text-primary shadow-md">
                   <span>
                     {t(`jobs.${jobKey}.name`)}
-                    <span className={job.color}>&lt;{c.language}&gt;</span>
+                    <span className={job.color}>&lt;{getLanguageDisplayName(c.language)}&gt;</span>
                   </span>
                   <span>Lv.{c.level}</span>
                 </div>

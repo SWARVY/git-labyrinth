@@ -42,13 +42,21 @@ export async function fetchLanguageBytes(
 ): Promise<Record<string, number>> {
   const octokit = new Octokit({ auth: accessToken });
 
-  const { user } = await octokit.graphql<GraphQLResponse>(LANGUAGE_BYTES_QUERY, { login });
+  const { user } = await octokit.graphql<GraphQLResponse>(
+    LANGUAGE_BYTES_QUERY,
+    { login },
+  );
+
+  const LANGUAGE_ALIASES: Record<string, string> = {
+    TSX: "TypeScript",
+    JSX: "JavaScript",
+  };
 
   const langBytes = new Map<string, number>();
 
   for (const repo of user.repositories.nodes) {
     for (const edge of repo.languages.edges) {
-      const name = edge.node.name;
+      const name = LANGUAGE_ALIASES[edge.node.name] ?? edge.node.name;
       langBytes.set(name, (langBytes.get(name) ?? 0) + edge.size);
     }
   }
