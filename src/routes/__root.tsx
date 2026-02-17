@@ -5,19 +5,19 @@ import {
   Scripts,
   createRootRoute,
   useRouterState,
-} from '@tanstack/react-router';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AnimatePresence, motion } from 'motion/react';
-import * as React from 'react';
+} from "@tanstack/react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AnimatePresence, motion } from "motion/react";
+import * as React from "react";
 
-import i18n from '@shared/i18n';
+import i18n from "@shared/i18n";
 
 void i18n;
 
-import { useAuthSync } from '@entities/user';
-import appCss from '~/styles/app.css?url';
+import { useAuthSync } from "@entities/user";
+import appCss from "~/styles/app.css?url";
 
-import { ApiError } from '@shared/lib/api-client';
+import { ApiError } from "@shared/lib/api-client";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,18 +33,30 @@ const queryClient = new QueryClient({
 export const Route = createRootRoute({
   head: () => ({
     meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'Git Labyrinth | Enter the Code. Survive the Maze.' },
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "Git Labyrinth | Enter the Code. Survive the Maze." },
       {
-        name: 'description',
+        name: "description",
         content:
-          'Explore the code labyrinth and grow your pixel hero with Git Labyrinth.',
+          "Explore the code labyrinth and grow your pixel hero with Git Labyrinth.",
       },
     ],
     links: [
-      { rel: 'stylesheet', href: appCss },
-      { rel: 'icon', href: '/favicon.ico' },
+      { rel: "stylesheet", href: appCss },
+      {
+        rel: "icon",
+        type: "image/png",
+        href: "/favicon-96x96.png",
+        sizes: "96x96",
+      },
+      { rel: "shortcut icon", href: "/favicon.ico" },
+      {
+        rel: "apple-touch-icon",
+        sizes: "180x180",
+        href: "/apple-touch-icon.png",
+      },
+      { rel: "manifest", href: "/site.webmanifest" },
     ],
   }),
   component: RootComponent,
