@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { tv } from "tailwind-variants";
 import { useTranslation } from "react-i18next";
 import { Button } from "@shared/ui";
-import { getJobClass, getJobKey, getJobSprites } from "@shared/constants/jobs";
+import { getJobClass, getJobKey, getJobSprites, getLanguageDisplayName } from "@shared/constants/jobs";
 import { calcLevelProgress } from "@entities/character";
 import type { UserCharacter } from "@entities/character";
 
@@ -96,7 +96,7 @@ export function CharacterCard({
 
       {/* Language label */}
       <p className="font-mono text-[10px] text-muted-foreground">
-        {character.language === "novice" ? "No Class" : character.language}
+        {character.language === "novice" ? "No Class" : getLanguageDisplayName(character.language)}
       </p>
 
       {/* Weapon */}

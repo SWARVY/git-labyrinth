@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { calcRpgAttributes } from "@entities/github-stats";
-import { getJobClass, getJobKey } from "@shared/constants/jobs";
+import { getJobClass, getJobKey, getLanguageDisplayName } from "@shared/constants/jobs";
 import i18next from "@shared/i18n";
 import type { GithubStats } from "@shared/api/github";
 import {
@@ -263,7 +263,7 @@ export const Route = createFileRoute("/api/og")({
             jobColor: jobColorHex,
             weapon: t(`jobs.${jobKey}.weapon`),
             level: character.level,
-            language: character.language,
+            language: getLanguageDisplayName(character.language),
             attributes: meta.attributes,
             currentStreak: meta.currentStreak,
             spriteBase64,
