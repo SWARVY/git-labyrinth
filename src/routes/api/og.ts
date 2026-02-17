@@ -7,7 +7,11 @@ import { calcRpgAttributes } from "@entities/github-stats";
 import { getJobClass, getJobKey } from "@shared/constants/jobs";
 import i18next from "@shared/i18n";
 import type { GithubStats } from "@shared/api/github";
-import { buildOgSvg, buildCampfireSvg } from "@shared/lib/og-image";
+import {
+  buildOgSvg,
+  buildCampfireSvg,
+  buildFallbackSvg,
+} from "@shared/lib/og-image";
 import type { OgImageType } from "@shared/lib/og-image";
 
 // ─── Sprite asset key → file path mapping ───
@@ -132,11 +136,17 @@ export const Route = createFileRoute("/api/og")({
         const lang = url.searchParams.get("lang") ?? "en";
         const t = i18next.getFixedT(lang);
 
+        const svgHeaders = {
+          "Content-Type": "image/svg+xml",
+          "Cache-Control": "public, max-age=3600, s-maxage=3600",
+        };
+
         if (!userId) {
-          return new Response(
-            JSON.stringify({ error: "userId query parameter required" }),
-            { status: 400, headers: { "Content-Type": "application/json" } },
-          );
+          const fontBase64 = await getFontBase64();
+          return new Response(buildFallbackSvg(fontBase64, lang), {
+            status: 200,
+            headers: svgHeaders,
+          });
         }
 
         try {
@@ -149,21 +159,12 @@ export const Route = createFileRoute("/api/og")({
             .eq("user_id", userId)
             .single();
 
-          if (!profile?.equipped_char_id) {
-            return new Response(
-              JSON.stringify({ error: "No equipped character found" }),
-              { status: 404, headers: { "Content-Type": "application/json" } },
-            );
-          }
-
-          if (!profile.stats_cache) {
-            return new Response(
-              JSON.stringify({
-                error:
-                  "No stats cache found. Visit the dashboard first to generate stats.",
-              }),
-              { status: 404, headers: { "Content-Type": "application/json" } },
-            );
+          if (!profile?.equipped_char_id || !profile.stats_cache) {
+            const fontBase64 = await getFontBase64();
+            return new Response(buildFallbackSvg(fontBase64, lang), {
+              status: 200,
+              headers: svgHeaders,
+            });
           }
 
           // Fetch username from auth.users
@@ -229,10 +230,7 @@ export const Route = createFileRoute("/api/og")({
 
             return new Response(svg, {
               status: 200,
-              headers: {
-                "Content-Type": "image/svg+xml",
-                "Cache-Control": "public, max-age=3600, s-maxage=3600",
-              },
+              headers: svgHeaders,
             });
           }
 
@@ -245,10 +243,11 @@ export const Route = createFileRoute("/api/og")({
             .single();
 
           if (!character) {
-            return new Response(
-              JSON.stringify({ error: "Character not found" }),
-              { status: 404, headers: { "Content-Type": "application/json" } },
-            );
+            const fontBase64 = await getFontBase64();
+            return new Response(buildFallbackSvg(fontBase64, lang), {
+              status: 200,
+              headers: svgHeaders,
+            });
           }
 
           const meta = calcRpgAttributes(stats);
@@ -273,10 +272,7 @@ export const Route = createFileRoute("/api/og")({
 
           return new Response(svg, {
             status: 200,
-            headers: {
-              "Content-Type": "image/svg+xml",
-              "Cache-Control": "public, max-age=3600, s-maxage=3600",
-            },
+            headers: svgHeaders,
           });
         } catch (err) {
           const message =

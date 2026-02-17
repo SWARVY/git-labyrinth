@@ -8,7 +8,7 @@ import { CharacterCard } from "./character-card";
 
 function CollectionSkeleton() {
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
       {Array.from({ length: 3 }).map((_, i) => (
         <div
           key={i}
@@ -38,7 +38,10 @@ function CollectionError({
   reset: () => void;
 }) {
   return (
-    <div role="alert" className="border-4 border-destructive bg-destructive/10 p-4 text-center">
+    <div
+      role="alert"
+      className="border-4 border-destructive bg-destructive/10 p-4 text-center"
+    >
       <p className="font-mono text-sm text-destructive">{error.message}</p>
       <button
         type="button"
@@ -71,7 +74,7 @@ function CollectionContent() {
         }
 
         return (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
             {data.characters.map((character) => (
               <CharacterCard
                 key={character.id}

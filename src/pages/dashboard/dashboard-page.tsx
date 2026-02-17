@@ -1,17 +1,17 @@
-import { Suspense } from '@suspensive/react';
-import { SuspenseQuery } from '@suspensive/react-query-5';
+import { Suspense } from "@suspensive/react";
+import { SuspenseQuery } from "@suspensive/react-query-5";
 
 import {
   characterCollectionQueryOptions,
   calcLevelProgress,
   type UserCharacter,
-} from '@entities/character';
-import { useTranslation } from 'react-i18next';
-import { getJobClass, getJobKey, getJobSprites } from '@shared/constants/jobs';
-import { CampfireCanvas } from '@shared/ui';
-import { StatsBoard } from '@widgets/stats-dashboard';
-import { CharacterCollection } from '@widgets/character-collection';
-import { SyncButton } from '@features/sync-characters';
+} from "@entities/character";
+import { useTranslation } from "react-i18next";
+import { getJobClass, getJobKey, getJobSprites } from "@shared/constants/jobs";
+import { CampfireCanvas } from "@shared/ui";
+import { StatsBoard } from "@widgets/stats-dashboard";
+import { CharacterCollection } from "@widgets/character-collection";
+import { SyncButton } from "@features/sync-characters";
 
 function formatDashboardBytes(bytes: number): string {
   if (bytes >= 1_000_000) return `${(bytes / 1_000_000).toFixed(1)}MB`;
@@ -25,7 +25,7 @@ function formatDashboardBytes(bytes: number): string {
  *   flipX flips the sprite horizontally to face the fire
  */
 interface SeatConfig {
-  pose: 'sitting' | 'back';
+  pose: "sitting" | "back";
   flipX: boolean;
   x: number;
   y: number;
@@ -33,13 +33,13 @@ interface SeatConfig {
 
 const SEATS: SeatConfig[] = [
   // top-left — sitting side, flip to face right
-  { pose: 'sitting', flipX: true, x: -90, y: -35 },
+  { pose: "sitting", flipX: true, x: -90, y: -35 },
   // top-right — sitting side, no flip (faces left)
-  { pose: 'sitting', flipX: false, x: 90, y: -35 },
+  { pose: "sitting", flipX: false, x: 90, y: -35 },
   // bottom-left — sitting back, no flip (faces right)
-  { pose: 'back', flipX: false, x: -90, y: 35 },
+  { pose: "back", flipX: false, x: -90, y: 35 },
   // bottom-right — sitting back, flip to face left
-  { pose: 'back', flipX: true, x: 90, y: 35 },
+  { pose: "back", flipX: true, x: 90, y: 35 },
 ];
 
 function CampfireScene({
@@ -65,14 +65,14 @@ function CampfireScene({
         className="pointer-events-none absolute inset-0 animate-[fireGlowOuter_2s_ease-in-out_infinite]"
         style={{
           background:
-            'radial-gradient(350px 220px at center, rgba(245,158,11,0.30) 0%, rgba(239,68,68,0.08) 40%, rgba(245,158,11,0) 100%)',
+            "radial-gradient(350px 220px at center, rgba(245,158,11,0.30) 0%, rgba(239,68,68,0.08) 40%, rgba(245,158,11,0) 100%)",
         }}
       />
 
       {/* Campfire cluster — all positioned relative to bonfire center */}
       <div
         className="relative z-10 flex items-center justify-center"
-        style={{ width: '320px', height: '240px' }}
+        style={{ width: "320px", height: "240px" }}
       >
         {/* Inner core glow — explicit gradient size */}
         <div
@@ -80,7 +80,7 @@ function CampfireScene({
           className="pointer-events-none absolute inset-0 animate-[fireGlowInner_1.5s_ease-in-out_infinite]"
           style={{
             background:
-              'radial-gradient(70px 55px at center, rgba(251,191,36,0.50) 0%, rgba(245,158,11,0.15) 60%, rgba(245,158,11,0) 100%)',
+              "radial-gradient(70px 55px at center, rgba(251,191,36,0.50) 0%, rgba(245,158,11,0.15) 60%, rgba(245,158,11,0) 100%)",
           }}
         />
 
@@ -94,7 +94,7 @@ function CampfireScene({
           const job = getJobClass(c.language);
           const jobKey = getJobKey(c.language);
           const spriteSrc =
-            seat.pose === 'sitting' ? sprites.sitting : sprites.back;
+            seat.pose === "sitting" ? sprites.sitting : sprites.back;
           return (
             <div
               key={c.id}
@@ -108,8 +108,8 @@ function CampfireScene({
                 alt={t(`jobs.${jobKey}.name`)}
                 className="h-24 w-24 object-contain"
                 style={{
-                  imageRendering: 'pixelated',
-                  transform: seat.flipX ? 'scaleX(-1)' : undefined,
+                  imageRendering: "pixelated",
+                  transform: seat.flipX ? "scaleX(-1)" : undefined,
                 }}
               />
               {/* Tooltip on hover */}
@@ -140,7 +140,7 @@ function EquippedDetail({ character }: { character: UserCharacter | null }) {
     return (
       <aside
         className="flex h-full flex-col items-center justify-center border-2 border-secondary border-t-primary/30 bg-card/50 p-6"
-        style={{ boxShadow: 'inset 0 1px 8px rgba(0,0,0,0.3)' }}
+        style={{ boxShadow: "inset 0 1px 8px rgba(0,0,0,0.3)" }}
         aria-label="Equipped character"
       >
         <p className="font-pixel text-xs text-muted-foreground">EMPTY SLOT</p>
@@ -159,7 +159,7 @@ function EquippedDetail({ character }: { character: UserCharacter | null }) {
   return (
     <aside
       className="flex h-full flex-col border-2 border-secondary border-t-primary/30 bg-card/50 p-5"
-      style={{ boxShadow: 'inset 0 1px 8px rgba(0,0,0,0.3)' }}
+      style={{ boxShadow: "inset 0 1px 8px rgba(0,0,0,0.3)" }}
       aria-label="Equipped character"
     >
       {/* Character image — large, centered */}
@@ -168,7 +168,7 @@ function EquippedDetail({ character }: { character: UserCharacter | null }) {
           src={sprites.standing}
           alt={t(`jobs.${jobKey}.name`)}
           className="h-32 w-32 object-contain"
-          style={{ imageRendering: 'pixelated' }}
+          style={{ imageRendering: "pixelated" }}
         />
       </figure>
 
@@ -195,7 +195,7 @@ function EquippedDetail({ character }: { character: UserCharacter | null }) {
           </span>
           <span className="font-mono text-[9px] text-primary">
             {progress.isMax
-              ? 'MAX'
+              ? "MAX"
               : `${formatDashboardBytes(character.totalBytes)} / ${formatDashboardBytes(character.totalBytes + (progress.required - progress.current))}`}
           </span>
         </div>
@@ -208,7 +208,7 @@ function EquippedDetail({ character }: { character: UserCharacter | null }) {
           aria-label="Experience"
         >
           <div
-            className={`h-full transition-all ${progress.isMax ? 'bg-amber-400' : 'bg-primary'}`}
+            className={`h-full transition-all ${progress.isMax ? "bg-amber-400" : "bg-primary"}`}
             style={{ width: `${progress.ratio * 100}%` }}
           />
         </div>
@@ -226,12 +226,12 @@ export function DashboardPage() {
   return (
     <main className="dungeon-bg relative mx-auto max-w-5xl select-none px-4 py-6">
       {/* Header */}
-      <header className="mb-6 flex items-end justify-between pb-3">
+      <header className="mb-6 flex flex-wrap items-end justify-between gap-2 pb-3">
         <div>
           <h1
-            className="section-title font-pixel text-xl text-primary"
+            className="section-title font-pixel text-lg text-primary sm:text-xl"
             style={{
-              textShadow: '0 0 6px rgba(245, 158, 11, 0.3)',
+              textShadow: "0 0 6px rgba(245, 158, 11, 0.3)",
             }}
           >
             <span className="text-primary/40">◆</span>
@@ -251,7 +251,7 @@ export function DashboardPage() {
               <div className="relative flex flex-col items-center py-8">
                 <div
                   className="relative z-10 flex items-center justify-center"
-                  style={{ width: '320px', height: '240px' }}
+                  style={{ width: "320px", height: "240px" }}
                 >
                   <CampfireCanvas width={100} height={100} />
                 </div>
@@ -260,7 +260,7 @@ export function DashboardPage() {
             <div className="lg:flex-1">
               <div
                 className="flex h-full flex-col border-2 border-secondary border-t-primary/30 bg-card/50 p-5"
-                style={{ boxShadow: 'inset 0 1px 8px rgba(0,0,0,0.3)' }}
+                style={{ boxShadow: "inset 0 1px 8px rgba(0,0,0,0.3)" }}
               >
                 <div className="mb-3 h-40 w-full animate-pulse border-2 border-black bg-muted" />
                 <div className="mb-1 h-4 w-20 animate-pulse bg-muted" />
@@ -299,8 +299,8 @@ export function DashboardPage() {
       <section className="mt-8" aria-labelledby="stats-heading">
         <h2
           id="stats-heading"
-          className="section-title mb-4 font-pixel text-sm text-primary"
-          style={{ textShadow: '0 0 6px rgba(245, 158, 11, 0.3)' }}
+          className="section-title mb-4 font-pixel text-xs text-primary sm:text-sm"
+          style={{ textShadow: "0 0 6px rgba(245, 158, 11, 0.3)" }}
         >
           <span className="text-primary/40">◆</span>
           <span>Status</span>
@@ -313,8 +313,8 @@ export function DashboardPage() {
       <section className="mt-8" aria-labelledby="collection-heading">
         <h2
           id="collection-heading"
-          className="section-title mb-4 font-pixel text-sm text-primary"
-          style={{ textShadow: '0 0 6px rgba(245, 158, 11, 0.3)' }}
+          className="section-title mb-4 font-pixel text-xs text-primary sm:text-sm"
+          style={{ textShadow: "0 0 6px rgba(245, 158, 11, 0.3)" }}
         >
           <span className="text-primary/40">◆</span>
           <span>Collection</span>

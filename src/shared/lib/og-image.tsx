@@ -212,6 +212,53 @@ export function buildOgSvg(props: OgImageProps): string {
 </svg>`;
 }
 
+/** Fallback — shown when user is not found or has no data */
+export function buildFallbackSvg(fontBase64: string, lang: string): string {
+  const W = 495;
+  const H = 270;
+  const isKo = lang.startsWith("ko");
+
+  const title = "GIT LABYRINTH";
+  const line1 = isKo
+    ? "아직 등록되지 않은 모험가입니다."
+    : "This adventurer has not been registered yet.";
+  const line2 = isKo
+    ? "사이트에 방문하여 캐릭터를 생성해 보세요!"
+    : "Visit the site to create your character!";
+  const url = "labyrinth.forimaginary.dev";
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+  <defs>
+    <style>
+      @font-face {
+        font-family: 'Galmuri9';
+        src: url('data:font/truetype;base64,${fontBase64}') format('truetype');
+      }
+      text { font-family: 'Galmuri9', monospace; }
+    </style>
+  </defs>
+
+  <rect width="${W}" height="${H}" fill="#0c0c16"/>
+  <rect x="4" y="4" width="${W - 8}" height="${H - 8}" rx="2" fill="none" stroke="#1e1e30" stroke-width="1"/>
+  <rect x="6" y="6" width="${W - 12}" height="${H - 12}" rx="1" fill="none" stroke="#2a2a3a" stroke-width="0.5"/>
+
+  <polygon points="10,4 14,8 10,12 6,8" fill="#3a3525" opacity="0.6"/>
+  <polygon points="${W - 10},4 ${W - 6},8 ${W - 10},12 ${W - 14},8" fill="#3a3525" opacity="0.6"/>
+  <polygon points="10,${H - 4} 14,${H - 8} 10,${H - 12} 6,${H - 8}" fill="#3a3525" opacity="0.6"/>
+  <polygon points="${W - 10},${H - 4} ${W - 6},${H - 8} ${W - 10},${H - 12} ${W - 14},${H - 8}" fill="#3a3525" opacity="0.6"/>
+
+  <text x="${W / 2}" y="90" fill="#d4a843" font-size="20" text-anchor="middle" letter-spacing="4">${title}</text>
+  <line x1="120" y1="105" x2="${W - 120}" y2="105" stroke="#3a3525" stroke-width="1" opacity="0.5"/>
+
+  <text x="${W / 2}" y="140" fill="#6a6a7a" font-size="10" text-anchor="middle">${escapeXml(line1)}</text>
+  <text x="${W / 2}" y="165" fill="#6a6a7a" font-size="10" text-anchor="middle">${escapeXml(line2)}</text>
+
+  <text x="${W / 2}" y="210" fill="#d4a843" font-size="9" text-anchor="middle" opacity="0.8">${url}</text>
+
+  <text x="${W / 2}" y="${H - 2}" fill="#1e1e30" font-size="6" text-anchor="middle" letter-spacing="3">GIT LABYRINTH</text>
+</svg>`;
+}
+
 /** Type B — Campfire scene with multiple characters */
 export function buildCampfireSvg(props: OgCampfireProps): string {
   const { username, fontBase64, bonfireBase64, characters } = props;
