@@ -12,6 +12,7 @@ import type { RpgAttributesMeta } from "@entities/github-stats";
 import type { GithubStats } from "@shared/api/github";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@shared/ui";
 import type { ChartConfig } from "@shared/ui";
+import { getLanguageDisplayName } from "@shared/constants/jobs";
 
 const chartConfig = {
   value: {
@@ -306,7 +307,9 @@ function StatsContent({ data }: { data: GithubStats }) {
               {t("stats.main")}:{" "}
             </span>
             <span className="font-pixel text-xs text-primary">
-              {data.topLanguage ?? "—"}
+              {data.topLanguage
+                ? getLanguageDisplayName(data.topLanguage)
+                : "—"}
             </span>
           </div>
         </div>

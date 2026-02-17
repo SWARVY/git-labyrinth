@@ -1,4 +1,5 @@
 import { Octokit } from "octokit";
+import { getSupportedLanguageKeys } from "@shared/constants/jobs";
 
 const LANGUAGE_BYTES_QUERY = `
   query ($login: String!) {
@@ -47,17 +48,36 @@ export async function fetchLanguageBytes(
     { login },
   );
 
-  const LANGUAGE_ALIASES: Record<string, string> = {
-    TSX: "TypeScript",
-    JSX: "JavaScript",
+  // Map GitHub language names to our job keys
+  const LANGUAGE_TO_JOB_KEY: Record<string, string> = {
+    TypeScript: "typescript",
+    JavaScript: "javascript",
+    Python: "python",
+    Java: "java",
+    Kotlin: "kotlin",
+    Swift: "swift",
+    "C++": "c++",
+    "C#": "csharp",
+    Go: "go",
+    Rust: "rust",
+    PHP: "php",
+    Ruby: "ruby",
+    // Aliases
+    TSX: "typescript",
+    JSX: "javascript",
   };
 
+  const supportedKeys = new Set(getSupportedLanguageKeys());
   const langBytes = new Map<string, number>();
 
   for (const repo of user.repositories.nodes) {
     for (const edge of repo.languages.edges) {
-      const name = LANGUAGE_ALIASES[edge.node.name] ?? edge.node.name;
-      langBytes.set(name, (langBytes.get(name) ?? 0) + edge.size);
+      const jobKey = LANGUAGE_TO_JOB_KEY[edge.node.name];
+
+      // Only include languages that are supported
+      if (jobKey && supportedKeys.has(jobKey)) {
+        langBytes.set(jobKey, (langBytes.get(jobKey) ?? 0) + edge.size);
+      }
     }
   }
 
