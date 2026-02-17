@@ -89,37 +89,15 @@ async function getBonfireBase64(): Promise<string> {
   return bonfireBase64Cache;
 }
 
-// ─── Parse .env for server-only secrets ───
-let envCache: Record<string, string> | null = null;
-
-async function loadEnvFile(): Promise<Record<string, string>> {
-  if (envCache) return envCache;
-  try {
-    const content = await readFile(join(process.cwd(), ".env"), "utf-8");
-    const parsed: Record<string, string> = {};
-    for (const line of content.split("\n")) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith("#")) continue;
-      const eqIdx = trimmed.indexOf("=");
-      if (eqIdx === -1) continue;
-      parsed[trimmed.slice(0, eqIdx)] = trimmed.slice(eqIdx + 1);
-    }
-    envCache = parsed;
-    return parsed;
-  } catch {
-    return {};
-  }
-}
-
 // ─── Supabase admin client (service role bypasses RLS) ───
-async function createAdminClient() {
-  const env = await loadEnvFile();
-  const url = env.VITE_SUPABASE_URL ?? import.meta.env.VITE_SUPABASE_URL;
-  const serviceKey = env.SUPABASE_SERVICE_ROLE_KEY;
+function createAdminClient() {
+  const url =
+    process.env.VITE_SUPABASE_URL ?? import.meta.env.VITE_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!url || !serviceKey) {
     throw new Error(
-      "Missing SUPABASE_SERVICE_ROLE_KEY in .env file. Required for /api/og.",
+      "Missing SUPABASE_SERVICE_ROLE_KEY. Set it as an environment variable.",
     );
   }
 
