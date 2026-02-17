@@ -1,6 +1,8 @@
 import { Octokit } from "octokit";
 
 import type { GithubStats } from "./schema";
+import { fetchLanguageBytes } from "./fetch-language-bytes";
+import { getSupportedLanguageKeys } from "@shared/constants/jobs";
 
 const STATS_QUERY = `
   query ($login: String!) {
@@ -140,20 +142,16 @@ export async function fetchGithubStats(
     user.contributionsCollection.totalCommitContributions +
     user.contributionsCollection.restrictedContributionsCount;
 
-  const langCount = new Map<string, number>();
-  for (const repo of user.repositories.nodes) {
-    if (repo.primaryLanguage) {
-      const name = repo.primaryLanguage.name;
-      langCount.set(name, (langCount.get(name) ?? 0) + 1);
-    }
-  }
+  // Get language bytes to determine top language by code amount
+  // languageBytes already returns normalized job keys (e.g., "typescript", "javascript")
+  const languageBytes = await fetchLanguageBytes(accessToken, login);
 
   let topLanguage: string | null = null;
-  let maxCount = 0;
-  for (const [lang, count] of langCount) {
-    if (count > maxCount) {
-      maxCount = count;
-      topLanguage = lang;
+  let maxBytes = 0;
+  for (const [jobKey, bytes] of Object.entries(languageBytes)) {
+    if (bytes > maxBytes) {
+      maxBytes = bytes;
+      topLanguage = jobKey;
     }
   }
 

@@ -24,7 +24,7 @@ const ko = {
       blazing: "맹렬",
     },
     hpBar: "{{status}} — {{current}} / 365",
-    main: "주력",
+    main: "특기",
     retry: "다시 시도",
     tooltip: {
       vit: "생명력 — 연속 커밋 일수 ({{current}} / 365일 → 100점 환산)",
