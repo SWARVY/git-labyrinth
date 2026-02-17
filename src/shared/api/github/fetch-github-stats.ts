@@ -7,7 +7,9 @@ const STATS_QUERY = `
     user(login: $login) {
       repositories(
         first: 100
-        ownerAffiliations: OWNER
+        ownerAffiliations: [OWNER, ORGANIZATION_MEMBER]
+        privacy: PUBLIC
+        isFork: false
         orderBy: { field: STARGAZERS, direction: DESC }
       ) {
         nodes {
