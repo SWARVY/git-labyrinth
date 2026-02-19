@@ -112,7 +112,7 @@ export function buildOgSvg(props: OgImageProps): string {
     <style>
       @font-face {
         font-family: 'Galmuri9';
-        src: url('data:font/truetype;base64,${fontBase64}') format('truetype');
+        src: url('data:font/woff2;base64,${fontBase64}') format('woff2');
       }
       text { font-family: 'Galmuri9', monospace; }
 
@@ -232,7 +232,7 @@ export function buildFallbackSvg(fontBase64: string, lang: string): string {
     <style>
       @font-face {
         font-family: 'Galmuri9';
-        src: url('data:font/truetype;base64,${fontBase64}') format('truetype');
+        src: url('data:font/woff2;base64,${fontBase64}') format('woff2');
       }
       text { font-family: 'Galmuri9', monospace; }
     </style>
@@ -326,7 +326,7 @@ export function buildCampfireSvg(props: OgCampfireProps): string {
     <style>
       @font-face {
         font-family: 'Galmuri9';
-        src: url('data:font/truetype;base64,${fontBase64}') format('truetype');
+        src: url('data:font/woff2;base64,${fontBase64}') format('woff2');
       }
       text { font-family: 'Galmuri9', monospace; }
 

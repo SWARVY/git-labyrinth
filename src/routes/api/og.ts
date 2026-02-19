@@ -4,7 +4,11 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { calcRpgAttributes } from "@entities/github-stats";
-import { getJobClass, getJobKey, getLanguageDisplayName } from "@shared/constants/jobs";
+import {
+  getJobClass,
+  getJobKey,
+  getLanguageDisplayName,
+} from "@shared/constants/jobs";
 import i18next from "@shared/i18n";
 import type { GithubStats } from "@shared/api/github";
 import {
@@ -51,19 +55,30 @@ let fontBase64Cache: string | null = null;
 
 async function getFontBase64(): Promise<string> {
   if (fontBase64Cache) return fontBase64Cache;
-  const res = await fetch(
-    "https://cdn.jsdelivr.net/npm/galmuri@latest/dist/Galmuri9.ttf",
+  const fontPath = join(
+    process.cwd(),
+    "src",
+    "shared",
+    "assets",
+    "og",
+    "Galmuri9-subset.woff2",
   );
-  const buf = Buffer.from(await res.arrayBuffer());
+  const buf = await readFile(fontPath);
   fontBase64Cache = buf.toString("base64");
   return fontBase64Cache;
 }
 
+const spriteCache = new Map<string, string>();
+
 async function getSpriteBase64(assetKey: string): Promise<string> {
   const file = SPRITE_FILES[assetKey] ?? SPRITE_FILES.novice;
-  const spritePath = join(process.cwd(), "src", "shared", "assets", file);
+  const cacheKey = `stand:${file}`;
+  if (spriteCache.has(cacheKey)) return spriteCache.get(cacheKey)!;
+  const spritePath = join(process.cwd(), "src", "shared", "assets", "og", file);
   const buf = await readFile(spritePath);
-  return `data:image/png;base64,${buf.toString("base64")}`;
+  const result = `data:image/png;base64,${buf.toString("base64")}`;
+  spriteCache.set(cacheKey, result);
+  return result;
 }
 
 async function getSpritePoseBase64(
@@ -73,9 +88,13 @@ async function getSpritePoseBase64(
   const registry =
     pose === "sitting" ? SPRITE_SITTING_FILES : SPRITE_BACK_FILES;
   const file = registry[assetKey] ?? registry.novice;
-  const spritePath = join(process.cwd(), "src", "shared", "assets", file);
+  const cacheKey = `${pose}:${file}`;
+  if (spriteCache.has(cacheKey)) return spriteCache.get(cacheKey)!;
+  const spritePath = join(process.cwd(), "src", "shared", "assets", "og", file);
   const buf = await readFile(spritePath);
-  return `data:image/png;base64,${buf.toString("base64")}`;
+  const result = `data:image/png;base64,${buf.toString("base64")}`;
+  spriteCache.set(cacheKey, result);
+  return result;
 }
 
 let bonfireBase64Cache: string | null = null;
@@ -86,6 +105,7 @@ async function getBonfireBase64(): Promise<string> {
     "src",
     "shared",
     "assets",
+    "og",
     "bonfire.png",
   );
   const buf = await readFile(spritePath);
@@ -138,7 +158,7 @@ export const Route = createFileRoute("/api/og")({
 
         const svgHeaders = {
           "Content-Type": "image/svg+xml",
-          "Cache-Control": "public, max-age=3600, s-maxage=3600",
+          "Cache-Control": "public, max-age=86400, s-maxage=86400",
         };
 
         if (!userId) {
