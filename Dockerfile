@@ -11,6 +11,7 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN pnpm run optimize-og
 RUN pnpm run build
 
 # Stage 3: Production runtime

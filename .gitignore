@@ -7,3 +7,4 @@ dist
 !.env.example
 src/routeTree.gen.ts
 .DS_Store
+src/shared/assets/og
