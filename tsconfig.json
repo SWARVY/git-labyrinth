@@ -1,5 +1,6 @@
 {
   "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["scripts"],
   "compilerOptions": {
     "types": ["vite/client"],
     "strict": true,

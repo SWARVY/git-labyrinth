@@ -11,7 +11,8 @@
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "format": "oxfmt --write \"src/**/*.{ts,tsx}\"",
-    "format:check": "oxfmt --check \"src/**/*.{ts,tsx}\""
+    "format:check": "oxfmt --check \"src/**/*.{ts,tsx}\"",
+    "optimize-og": "tsx scripts/subset-font.ts && tsx scripts/optimize-sprites.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.2.0",
@@ -50,9 +51,16 @@
     "nitro": "3.0.1-alpha.2",
     "oxfmt": "^0.32.0",
     "oxlint": "^1.2.0",
+    "sharp": "^0.34.5",
+    "subset-font": "^2.4.0",
     "tailwindcss": "^4.1.7",
     "typescript": "^5.8.3",
     "vite": "^7.3.1",
     "vite-tsconfig-paths": "^5.1.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp"
+    ]
   }
 }
